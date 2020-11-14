@@ -1,4 +1,5 @@
 import { all, put, takeLatest } from "redux-saga/effects"
+import { ConfigType } from "../../config/types"
 import { failSetConfig, setConfig, successSetConfig } from "./actions"
 import { START_SET_CONFIG } from "./actionTypes"
 
@@ -8,7 +9,7 @@ function* setConfigSaga({ payload = defaultFileName }) {
   try {
     const fileName = payload
     console.log(payload)
-    const configImported = yield import("../../config/" + fileName + ".json")
+    const configImported = yield import("../../config/" + fileName + ".ts")
     const configFile = configImported.default
     yield put(successSetConfig(configFile))
   } catch (error) {
