@@ -1,7 +1,11 @@
 import { Store } from "gatsby"
 import { createStore, applyMiddleware, compose, StoreEnhancer } from "redux"
-import sagas from "redux-saga"
+import createSagaMiddleware from "redux-saga"
 import rootReducer from "./rootReducer"
+import rootSaga from "./rootSaga"
+
+const sagas = createSagaMiddleware()
+const middlewares = [sagas]
 
 const composeEnhancers =
   typeof window === "object" &&
@@ -10,11 +14,14 @@ const composeEnhancers =
     : compose
 
 const createAppStore = (preloadedState?: Object): Store => {
-  return createStore(
+  const store = createStore(
     rootReducer,
     preloadedState,
-    composeEnhancers(applyMiddleware(sagas))
+    composeEnhancers(applyMiddleware(...middlewares))
   )
+
+  sagas.run(rootSaga)
+  return store
 }
 
 export default createAppStore
