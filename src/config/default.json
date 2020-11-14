@@ -1,0 +1,12 @@
+{
+  "navbar": {
+    "show_navbar": true
+  },
+  "theme": {
+    "primaryColor": "darkblue",
+    "onPrimaryColor": "white",
+    "secondaryColor": "pink",
+    "onSecondaryColor": "black",
+    "background": "lightgrey"
+  }
+}
