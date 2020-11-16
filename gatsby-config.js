@@ -9,9 +9,9 @@ console.log(`Using environment config: '${activeEnv}'`)
 
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
+    title: `Merchandise`,
     description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+    author: `@Mono @Gia`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -28,7 +28,8 @@ module.exports = {
       resolve: `gatsby-source-shopify`,
       options: {
         shopName: process.env.SHOPIFY_SHOP_NAME,
-        accessToken: process.env.SHOPIFY_SHOP_NAME,
+        accessToken: process.env.SHOPIFY_TOKEN,
+        includeCollections: [],
       },
     },
     {
