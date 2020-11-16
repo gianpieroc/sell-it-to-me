@@ -8,7 +8,6 @@ const defaultFileName = "default"
 function* setConfigSaga({ payload = defaultFileName }) {
   try {
     const fileName = payload
-    console.log(payload)
     const configImported = yield import("../../config/" + fileName + ".ts")
     const configFile = configImported.default
     yield put(successSetConfig(configFile))

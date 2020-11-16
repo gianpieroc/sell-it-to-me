@@ -1,9 +1,7 @@
-import React, { ComponentType, useEffect } from "react"
+import React, { useEffect } from "react"
 import { Provider, useDispatch } from "react-redux"
 import { setConfig } from "./config/actions"
 import createStore from "./createStore"
-
-const store = createStore()
 
 const Config = ({ children }: any) => {
   const dispatch = useDispatch()
