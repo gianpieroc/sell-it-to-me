@@ -9,10 +9,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import { ThemeProvider } from "styled-components"
 import { useSelector } from "react-redux"
-import {
-  themeModeSelectedSelector,
-  themeModeSelector,
-} from "../state/config/selectors"
+import { themeModeSelectedSelector } from "../state/config/selectors"
 import { useStaticQuery, graphql } from "gatsby"
 
 import Header from "./header"

@@ -1,3 +1,12 @@
+const activeEnv =
+  process.env.GATSBY_ACTIVE_ENV || process.env.NODE_ENV || "development"
+
+require("dotenv").config({
+  path: `.env.${activeEnv}`,
+})
+
+console.log(`Using environment config: '${activeEnv}'`)
+
 module.exports = {
   siteMetadata: {
     title: `Gatsby Default Starter`,
@@ -18,8 +27,8 @@ module.exports = {
     {
       resolve: `gatsby-source-shopify`,
       options: {
-        shopName: `[some-shop]`,
-        accessToken: `[token]`,
+        shopName: process.env.SHOPIFY_SHOP_NAME,
+        accessToken: process.env.SHOPIFY_SHOP_NAME,
       },
     },
     {
@@ -34,19 +43,6 @@ module.exports = {
         icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
       },
     },
-    // {
-    //   resolve: `gatsby-plugin-react-redux`,
-    //   options: {
-    //     pathToCreateStoreModule: "./src/state/createStore",
-    //     serialize: {
-    //       space: 0,
-    //       isJSON: true,
-    //       unsafe: false,
-    //     },
-    //     cleanupOnClient: true,
-    //     windowKey: "__PRELOADED_STATE__",
-    //   },
-    // },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
