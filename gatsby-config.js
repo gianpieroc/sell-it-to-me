@@ -29,7 +29,7 @@ module.exports = {
       options: {
         shopName: process.env.SHOPIFY_SHOP_NAME,
         accessToken: process.env.SHOPIFY_TOKEN,
-        includeCollections: [],
+        // includeCollections: ["shop"],
       },
     },
     {
