@@ -9,10 +9,10 @@ import React from "react"
 import PropTypes from "prop-types"
 import { ThemeProvider } from "styled-components"
 import { useSelector } from "react-redux"
-import { themeModeSelectedSelector } from "../state/config/selectors"
 import { useStaticQuery, graphql, Link } from "gatsby"
 
-import Header from "./header"
+import { themeModeSelectedSelector } from "../../state/config/selectors"
+import Header from "../Header"
 import "./layout.css"
 
 const graphqlQuery = graphql`
@@ -35,33 +35,29 @@ const Layout = ({ children }) => {
   const data = useStaticQuery(graphqlQuery)
   console.log(data)
   return (
-    <>
-      <ThemeProvider theme={theme}>
-        <Header siteTitle={data.site.siteMetadata?.title || `Title`}>
-          {data.allShopifyProduct.nodes.map(({ productType }) => (
-            <Link to={`/product/${productType}`}>{productType}</Link>
-          ))}
-        </Header>
-        <div
+    <ThemeProvider theme={theme}>
+      <Header siteTitle={data.site.siteMetadata?.title || `Title`}>
+        {data.allShopifyProduct.nodes.map(({ productType }) => (
+          <Link to={`/product/${productType}`}>{productType}</Link>
+        ))}
+      </Header>
+      <div
+        style={{
+          margin: `0 auto`,
+          maxWidth: 960,
+          padding: `0 1.0875rem 1.45rem`,
+        }}
+      >
+        <main>{children}</main>
+        <footer
           style={{
-            margin: `0 auto`,
-            maxWidth: 960,
-            padding: `0 1.0875rem 1.45rem`,
+            marginTop: `2rem`,
           }}
         >
-          <main>{children}</main>
-          <footer
-            style={{
-              marginTop: `2rem`,
-            }}
-          >
-            © {new Date().getFullYear()}, Built with
-            {` `}
-            <a href="https://www.gatsbyjs.com">Gatsby</a>
-          </footer>
-        </div>
-      </ThemeProvider>
-    </>
+          Hi
+        </footer>
+      </div>
+    </ThemeProvider>
   )
 }
 
