@@ -16,15 +16,19 @@ import Header from "../Header"
 import "./layout.css"
 
 const graphqlQuery = graphql`
-  query SiteTitleQuery {
+  query {
     site {
       siteMetadata {
         title
       }
     }
-    allShopifyProduct {
-      nodes {
-        productType
+    allShopifyCollection {
+      edges {
+        node {
+          id
+          title
+          handle
+        }
       }
     }
   }
@@ -33,12 +37,11 @@ const graphqlQuery = graphql`
 const Layout = ({ children }) => {
   const theme = useSelector(state => themeModeSelectedSelector(state, "light"))
   const data = useStaticQuery(graphqlQuery)
-  console.log(data)
   return (
     <ThemeProvider theme={theme}>
-      <Header siteTitle={data.site.siteMetadata?.title || `Title`}>
-        {data.allShopifyProduct.nodes.map(({ productType }) => (
-          <Link to={`/product/${productType}`}>{productType}</Link>
+      <Header siteTitle={data.site?.siteMetadata?.title || `Title`}>
+        {data.allShopifyCollection.edges.map(({ node: { handle, title } }) => (
+          <Link to={`/collection/${handle}`}>{title}</Link>
         ))}
       </Header>
       <div

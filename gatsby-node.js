@@ -1,39 +1,46 @@
 const path = require(`path`)
-exports.createPages = async ({ graphql, actions }) => {
+const allShopifyProductsHandleQuery = require(`./src/queries/products/allShopifyProductsHandle`)
+const allShopifyCollectionsHandleQuery = require(`./src/queries/collections/allShopifyCollectionsHandle`)
+const allShopifyCollectionsWithProducts = require(`./src/queries/collections/allShopifyCollectionsWithProducts`)
+
+const createProductPage = async ({ graphql, actions }) => {
   const { createPage } = actions
-  const result = await graphql(`
-    query {
-      allShopifyProduct(sort: { fields: [title] }) {
-        edges {
-          node {
-            title
-            images {
-              originalSrc
-            }
-            shopifyId
-            handle
-            description
-            availableForSale
-            priceRange {
-              maxVariantPrice {
-                amount
-              }
-              minVariantPrice {
-                amount
-              }
-            }
-          }
-        }
-      }
-    }
-  `)
-  result.data.allShopifyProduct.edges.forEach(({ node }) => {
+  const allShopifyProductsHandle = await graphql(
+    allShopifyCollectionsHandleQuery
+  )
+
+  allShopifyProductsHandle.data.allShopifyProduct.edges.forEach(({ node }) => {
     createPage({
       path: `/product/${node.handle}`,
-      component: path.resolve(`./src/pages/product.js`),
+      component: path.resolve(`./src/pages/product.tsx`),
       context: {
         product: node,
       },
     })
   })
+}
+
+const createCollectionsPage = async ({ graphql, actions }) => {
+  const { createPage } = actions
+  const allShopifyCollectionsHandle = await graphql(
+    allShopifyCollectionsWithProducts
+  )
+
+  console.log(allShopifyCollectionsHandle.data.allShopifyCollection)
+
+  allShopifyCollectionsHandle.data.allShopifyCollection.nodes.forEach(node => {
+    createPage({
+      path: `/collection/${node.handle}`,
+      component: path.resolve(`./src/pages/Collections/Collections.tsx`),
+      context: {
+        product: node,
+        id: node.id,
+      },
+    })
+  })
+}
+
+exports.createPages = async ({ graphql, actions }) => {
+  await createProductPage({ graphql, actions })
+  await createCollectionsPage({ graphql, actions })
 }
