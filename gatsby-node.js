@@ -26,15 +26,13 @@ const createCollectionsPage = async ({ graphql, actions }) => {
     allShopifyCollectionsWithProducts
   )
 
-  console.log(allShopifyCollectionsHandle.data.allShopifyCollection)
-
   allShopifyCollectionsHandle.data.allShopifyCollection.nodes.forEach(node => {
     createPage({
       path: `/collection/${node.handle}`,
       component: path.resolve(`./src/pages/Collections/Collections.tsx`),
       context: {
-        product: node,
-        id: node.id,
+        collection: node,
+        id: node.handle,
       },
     })
   })
